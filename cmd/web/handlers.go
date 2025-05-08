@@ -3,10 +3,26 @@ package main
 import (
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
 	"strconv"
 )
+
+func (app *application) home(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Server", "Go")
+
+	files :
+	    "./ui/html/base.tmpl",
+        "./ui/html/partials/nav.tmpl",
+        "./ui/html/pages/home.tmpl",
+    
+}
+
+ts, err := template.ParseFiles(files...)
+if err != nil {
+	app.logger.Error(err.Error(), "method", r.Method, "uri", r.URL.RequestURI())
+	http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	return
+}
 
 func home(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Server", "Go")
